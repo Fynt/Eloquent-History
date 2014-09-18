@@ -2,7 +2,7 @@
 
 trait HistoryTrait {
 
-  public static function bootSearchableTrait()
+  public static function bootHistoryTrait()
   {
     static::observe(new ModelObserver);
   }

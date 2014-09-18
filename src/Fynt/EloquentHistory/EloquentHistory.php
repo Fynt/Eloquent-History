@@ -7,10 +7,23 @@ class EloquentHistory {
    *
    * @return Illuminate\Database\Query\Builder
    */
-  public static function getVersionsTable()
+  public static function getHistoryTable()
   {
     $tableName = Config::get('eloquent-history::table');
     return DB::table($tableName);
+  }
+
+  /**
+   * Registers a new history entry.
+   *
+   * @param User|null $user
+   * @param string $action
+   * @param Elequent $model
+   * @return bool
+   */
+  public static function register($user, $action, Eloquent $model)
+  {
+    return true;
   }
 
 }

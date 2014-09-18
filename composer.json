@@ -1,5 +1,5 @@
 {
-    "name": "fynt/elequent-history",
+    "name": "fynt/eloquent-history",
     "description": "",
     "authors": [
         {
@@ -16,7 +16,7 @@
             "src/migrations"
         ],
         "psr-0": {
-            "Fynt\\ElequentHistory\\": "src/"
+            "Fynt\\EloquentHistory\\": "src/"
         }
     },
     "minimum-stability": "stable"

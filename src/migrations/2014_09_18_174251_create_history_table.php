@@ -15,7 +15,7 @@ class CreateHistoryTable extends Migration {
 		Schema::create('history', function($table)
 		{
 			$table->increments('id');
-			$table->integer('user_id')->unsigned()->index();
+			$table->integer('user_id')->unsigned()->nullable()->index();
 			$table->string('action', 30);
 			$table->integer('object_id')->unsigned();
 			$table->string('object_table', 64)->index();
