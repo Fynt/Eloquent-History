@@ -28,7 +28,9 @@ class ServiceProvider extends BaseServiceProvider {
 	 */
 	public function register()
 	{
-		//
+		$this->app->bind('history', function() {
+      return new EloquentHistory;
+    });
 	}
 
 	/**
@@ -38,7 +40,7 @@ class ServiceProvider extends BaseServiceProvider {
 	 */
 	public function provides()
 	{
-		return array();
+		return array('history');
 	}
 
 }
