@@ -1,5 +1,7 @@
 <?php namespace Fynt\EloquentHistory;
 
+use \User;
+
 class EloquentHistory {
 
   /**
@@ -23,7 +25,22 @@ class EloquentHistory {
    */
   public static function register($user, $action, Eloquent $model)
   {
-    return true;
+    $userId = ($user instanceof User) ? $user->id : null;
+
+    if($model->id) {
+      $creationDate = date('Y-m-d H:i:s');
+
+      return self::getHistoryTable()->insert([
+        'user_id' => $userId,
+        'action' => $action,
+        'object_id' => $model->id,
+        'object_table' => get_class($model),
+        'created_at' => $creationDate,
+        'updated_at' => $creationDate
+      ]);
+    }
+
+    return false;
   }
 
 }
