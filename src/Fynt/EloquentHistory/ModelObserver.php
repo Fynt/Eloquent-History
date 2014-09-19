@@ -1,5 +1,8 @@
 <?php namespace Fynt\EloquentHistory;
 
+use \Auth;
+use \History;
+
 class ModelObserver {
 
   const ACTION_CREATE = 'create';

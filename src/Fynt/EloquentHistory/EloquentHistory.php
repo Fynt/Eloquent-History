@@ -1,6 +1,8 @@
 <?php namespace Fynt\EloquentHistory;
 
+use \DB;
 use \User;
+use \Config;
 
 class EloquentHistory {
 
@@ -23,7 +25,7 @@ class EloquentHistory {
    * @param Elequent $model
    * @return bool
    */
-  public static function register($user, $action, Eloquent $model)
+  public static function register($user, $action, $model)
   {
     $userId = ($user instanceof User) ? $user->id : null;
 
@@ -41,6 +43,28 @@ class EloquentHistory {
     }
 
     return false;
+  }
+
+  public static function getHistory($limit=null)
+  {
+    return self::getHistoryTable()->take($limit)->get();
+  }
+
+  public static function getHistoryForUser($user, $limit=null)
+  {
+    $userId = ($user instanceof User) ? $user->id : null;
+    return self::getHistoryTable()
+      ->whereUserId($userId)
+      ->take($limit)
+      ->get();
+  }
+
+  public static function getHistoryForModel($model, $limit=null)
+  {
+    return self::getHistoryTable()
+      ->whereObjectTable(get_class($model))
+      ->take($limit)
+      ->get();
   }
 
 }
