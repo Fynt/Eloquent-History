@@ -1,7 +1,7 @@
 <?php namespace Fynt\EloquentHistory;
 
+use Illuminate\Auth\UserInterface;
 use \DB;
-use \User;
 use \Config;
 
 class EloquentHistory {
@@ -20,14 +20,14 @@ class EloquentHistory {
   /**
    * Registers a new history entry.
    *
-   * @param User|null $user
+   * @param UserInterface|null $user
    * @param string $action
    * @param Elequent $model
    * @return bool
    */
   public static function register($user, $action, $model)
   {
-    $userId = ($user instanceof User) ? $user->id : null;
+    $userId = ($user instanceof UserInterface) ? $user->id : null;
 
     if($model->id) {
       $creationDate = date('Y-m-d H:i:s');
