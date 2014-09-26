@@ -4,7 +4,7 @@ trait HistoryTrait {
 
   public static function bootHistoryTrait()
   {
-    static::observe(new ModelObserver);
+    static::observe(new HistoryModelObserver);
   }
 
 }

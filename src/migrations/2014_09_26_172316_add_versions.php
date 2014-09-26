@@ -14,7 +14,7 @@ class AddVersions extends Migration {
   {
     Schema::table('history', function($table)
     {
-      $table->integer('version_id')->unsigned();
+      $table->integer('version_id')->unsigned()->nullable();
     });
   }
 

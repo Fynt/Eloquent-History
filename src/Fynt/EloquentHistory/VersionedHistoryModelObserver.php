@@ -3,7 +3,7 @@
 use \Auth;
 use \History;
 
-class ModelObserver {
+class VersionedHistoryModelObserver {
 
   const ACTION_CREATE = 'create';
   const ACTION_UPDATE = 'update';
