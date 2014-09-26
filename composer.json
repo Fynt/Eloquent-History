@@ -1,6 +1,6 @@
 {
     "name": "fynt/eloquent-history",
-    "description": "",
+    "description": "Save history of user actions on your Eloquent models",
     "authors": [
         {
             "name": "Ryan",
@@ -9,7 +9,8 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "illuminate/support": "4.2.*"
+        "illuminate/support": "4.2.*",
+        "fynt/eloquent-versions": "*"
     },
     "autoload": {
         "classmap": [
