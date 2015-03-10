@@ -1,10 +1,6 @@
 <?php
 
-//use Illuminate\Auth\UserInterface;
-use Illuminate\Config\Repository;
-use Illuminate\Database\DatabaseManager;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Query\Builder;
 
 use Fynt\EloquentHistory\History;
 
@@ -40,9 +36,9 @@ class HistoryTest extends PHPUnit_Framework_TestCase {
     parent::setUp();
     // so many mocks...
     $this->model = Mockery::mock('MockModel'); // lawl
-    $this->config = Mockery::mock('Repository');
-    $this->db = Mockery::mock('DatabaseManager');
-    $this->queryBuilder = Mockery::mock('Builder');
+    $this->config = Mockery::mock('Illuminate\Config\Repository');
+    $this->db = Mockery::mock('Illuminate\Database\DatabaseManager');
+    $this->queryBuilder = Mockery::mock('Illuminate\Database\Query\Builder');
 
     $this->history = new History($this->db, $this->config);
   }

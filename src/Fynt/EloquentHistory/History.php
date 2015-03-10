@@ -15,8 +15,7 @@ class History {
    * @param DatabaseManager $db
    * @param Repository $config
    */
-  //public function __construct(DatabaseManager $db, Repository $config)
-  public function __construct($db, $config)
+  public function __construct(DatabaseManager $db, Repository $config)
   {
     $this->db = $db;
     $this->config = $config;
@@ -29,7 +28,7 @@ class History {
    * @param UserInterface|int|null $user
    * @return bool
    */
-  public function add($action, $model, $user = null)
+  public function add($action, Model $model, $user = null)
   {
     $userId = $this->getUserId($user);
 
@@ -84,7 +83,7 @@ class History {
    * @param int|null $limit
    * @return array
    */
-  public function allForModel($model, $limit = null)
+  public function allForModel(Model $model, $limit = null)
   {
     if (! $model->exists())
       return [];
@@ -106,7 +105,7 @@ class History {
    * @param int|null $limit
    * @return array
    */
-  public function allForModelType($model, $limit = null)
+  public function allForModelType(Model $model, $limit = null)
   {
     $table = $this->getHistoryTable();
     $table->whereObjectTable(get_class($model));
