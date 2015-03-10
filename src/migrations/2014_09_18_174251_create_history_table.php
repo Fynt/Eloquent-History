@@ -19,7 +19,7 @@ class CreateHistoryTable extends Migration {
       $table->string('action', 30);
       $table->integer('object_id')->unsigned();
       $table->string('object_table', 64)->index();
-      $table->timestamps();
+      $table->timestamp('created_at');
 
       $table->index(array('object_id', 'object_table'));
     });

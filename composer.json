@@ -1,23 +1,36 @@
 {
-    "name": "fynt/eloquent-history",
-    "description": "Save history of user actions on your Eloquent models",
-    "authors": [
-        {
-            "name": "Ryan",
-            "email": "ryan@fynt.ca"
-        }
+  "name": "fynt/eloquent-history",
+  "description": "Save a history of actions on your Eloquent models.",
+  "tags": ["laravel", "eloquent", "history"],
+  "authors": [
+    {
+      "name": "Ryan",
+      "email": "ryan@fynt.ca"
+    },
+    {
+      "name": "Keith",
+      "email": "keith@fynt.ca"
+    }
+  ],
+  "require": {
+    "php": ">=5.4.0",
+    "illuminate/auth": "4.2.*",
+    "illuminate/config": "4.2.*",
+    "illuminate/database": "4.2.*",
+    "illuminate/support": "4.2.*",
+    "nesbot/carbon": "~1.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "4.*",
+    "mockery/mockery": "0.9.*"
+  },
+  "autoload": {
+    "classmap": [
+      "src/migrations"
     ],
-    "require": {
-        "php": ">=5.4.0",
-        "illuminate/support": "4.2.*"
-    },
-    "autoload": {
-        "classmap": [
-            "src/migrations"
-        ],
-        "psr-0": {
-            "Fynt\\EloquentHistory\\": "src/"
-        }
-    },
-    "minimum-stability": "stable"
+    "psr-0": {
+      "Fynt\\EloquentHistory\\": "src/"
+    }
+  },
+  "minimum-stability": "stable"
 }

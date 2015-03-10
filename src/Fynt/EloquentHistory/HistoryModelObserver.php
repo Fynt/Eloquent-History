@@ -11,17 +11,17 @@ class HistoryModelObserver {
 
   public function created($model)
   {
-    History::register(Auth::user(), self::ACTION_CREATE, $model);
+    History::add(self::ACTION_CREATE, $model, Auth::user());
   }
 
   public function updated($model)
   {
-    History::register(Auth::user(), self::ACTION_UPDATE, $model);
+    History::add(self::ACTION_UPDATE, $model, Auth::user());
   }
 
   public function deleted($model)
   {
-    History::register(Auth::user(), self::ACTION_DELETE, $model);
+    History::add(self::ACTION_DELETE, $model, Auth::user());
   }
 
 }
