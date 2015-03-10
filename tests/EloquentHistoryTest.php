@@ -121,6 +121,102 @@ class EloquentHistoryTest extends PHPUnit_Framework_TestCase {
     $this->assertFalse($result);
   }
 
+  public function testAll()
+  {
+    $this->assertDbTableLoads();
+    $this->queryBuilder->shouldReceive('get')->once()->andReturn([]);
+
+    $result = $this->history->all();
+    $this->assertEquals($result, []);
+  }
+
+  public function testAllWithLimit()
+  {
+    $this->assertDbTableLoads();
+    $this->queryBuilder->shouldReceive('take')->once()->with(10);
+    $this->queryBuilder->shouldReceive('get')->once()->andReturn([]);
+
+    $result = $this->history->all(10);
+    $this->assertEquals($result, []);
+  }
+
+  public function testAllForUser()
+  {
+    $user = Mockery::mock('Illuminate\Auth\UserInterface')
+      ->shouldReceive('getAuthIdentifier')
+      ->andReturn(2)
+      ->mock();
+
+    $this->assertDbTableLoads();
+    $this->queryBuilder->shouldReceive('whereUserId')->once()->with(2);
+    $this->queryBuilder->shouldReceive('get')->once()->andReturn([]);
+
+    $result = $this->history->allForUser($user);
+    $this->assertEquals($result, []);
+  }
+
+  public function testAllForUserWithLimit()
+  {
+    $user = Mockery::mock('Illuminate\Auth\UserInterface')
+      ->shouldReceive('getAuthIdentifier')
+      ->andReturn(2)
+      ->mock();
+
+    $this->assertDbTableLoads();
+    $this->queryBuilder->shouldReceive('whereUserId')->once()->with(2);
+    $this->queryBuilder->shouldReceive('take')->once()->with(10);
+    $this->queryBuilder->shouldReceive('get')->once()->andReturn([]);
+
+    $result = $this->history->allForUser($user, 10);
+    $this->assertEquals($result, []);
+  }
+
+  public function testAllForModel()
+  {
+    $this->assertDbTableLoads();
+    $this->assertModelIdAccessed();
+    $this->queryBuilder->shouldReceive('whereObjectTable')->once()->with(get_class($this->model));
+    $this->queryBuilder->shouldReceive('whereObjectId')->once()->with(1);
+    $this->queryBuilder->shouldReceive('get')->once()->andReturn([]);
+
+    $result = $this->history->allForModel($this->model);
+    $this->assertEquals($result, []);
+  }
+
+  public function testAllForModelWithLimit()
+  {
+    $this->assertDbTableLoads();
+    $this->assertModelIdAccessed();
+    $this->queryBuilder->shouldReceive('whereObjectTable')->once()->with(get_class($this->model));
+    $this->queryBuilder->shouldReceive('whereObjectId')->once()->with(1);
+    $this->queryBuilder->shouldReceive('take')->once()->with(10);
+    $this->queryBuilder->shouldReceive('get')->once()->andReturn([]);
+
+    $result = $this->history->allForModel($this->model, 10);
+    $this->assertEquals($result, []);
+  }
+
+  public function testAllForModelType()
+  {
+    $this->assertDbTableLoads();
+    $this->queryBuilder->shouldReceive('whereObjectTable')->once()->with(get_class($this->model));
+    $this->queryBuilder->shouldReceive('get')->once()->andReturn([]);
+
+    $result = $this->history->allForModelType($this->model);
+    $this->assertEquals($result, []);
+  }
+
+  public function testAllForModelTypeWithLimit()
+  {
+    $this->assertDbTableLoads();
+    $this->queryBuilder->shouldReceive('whereObjectTable')->once()->with(get_class($this->model));
+    $this->queryBuilder->shouldReceive('take')->once()->with(10);
+    $this->queryBuilder->shouldReceive('get')->once()->andReturn([]);
+
+    $result = $this->history->allForModelType($this->model, 10);
+    $this->assertEquals($result, []);
+  }
+
 
   protected function assertDbTableLoads()
   {

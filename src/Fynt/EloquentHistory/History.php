@@ -15,6 +15,7 @@ class History {
    * @param DatabaseManager $db
    * @param Repository $config
    */
+  //public function __construct(DatabaseManager $db, Repository $config)
   public function __construct($db, $config)
   {
     $this->db = $db;
@@ -30,13 +31,7 @@ class History {
    */
   public function add($action, $model, $user = null)
   {
-    if ($user instanceof UserInterface) {
-      $userId = $user->getAuthIdentifier();
-    } else if (is_numeric($user)) {
-      $userId = $user;
-    } else {
-      $userId = null;
-    }
+    $userId = $this->getUserId($user);
 
     if ($model->exists()) {
       $table = $this->getHistoryTable();
@@ -55,7 +50,7 @@ class History {
   /**
    * Get all history events.
    * @param int $limit Default unlimited
-   * @return
+   * @return array
    */
   public function all($limit = null)
   {
@@ -65,21 +60,61 @@ class History {
     return $table->get();
   }
 
-  public function getHistoryForUser($user, $limit=null)
+  /**
+   * Get all history events for the provided user.
+   * @param UserInterface|user $user
+   * @param int|null | $limit
+   * @return array
+   */
+  public function allForUser($user, $limit = null)
   {
-    $userId = ($user instanceof User) ? $user->id : null;
-    return self::getHistoryTable()
-      ->whereUserId($userId)
-      ->take($limit)
-      ->get();
+    $userId = $this->getUserId($user);
+    $table = $this->getHistoryTable();
+    $table->whereUserId($userId);
+
+    if ($limit)
+      $table->take($limit);
+
+    return $table->get();
   }
 
-  public function getHistoryForModel($model, $limit=null)
+  /**
+   * Get all history that relates the the specific model supplied.
+   * @param Model $model
+   * @param int|null $limit
+   * @return array
+   */
+  public function allForModel($model, $limit = null)
   {
-    return self::getHistoryTable()
-      ->whereObjectTable(get_class($model))
-      ->take($limit)
-      ->get();
+    if (! $model->exists())
+      return [];
+
+    $key = $model->getKeyName();
+    $table = $this->getHistoryTable();
+    $table->whereObjectTable(get_class($model));
+    $table->whereObjectId($model->$key);
+
+    if ($limit)
+      $table->take($limit);
+
+    return $table->get();
+  }
+
+  /**
+   * Get all history for the type of model provided.
+   * @param Model $model
+   * @param int|null $limit
+   * @return array
+   */
+  public function allForModelType($model, $limit = null)
+  {
+    $table = $this->getHistoryTable();
+    $table->whereObjectTable(get_class($model));
+
+    if ($limit)
+      $table->take($limit);
+
+    return $table->get();
   }
 
   /**
@@ -91,6 +126,23 @@ class History {
   {
     $tableName = $this->config->get('eloquent-history::table');
     return $this->db->table($tableName);
+  }
+
+  /**
+   * Get the value for user ID from mixed input.
+   * @param Model|int|null $user
+   * @return int|null
+   */
+  protected function getUserId($user)
+  {
+    if ($user instanceof UserInterface) {
+      $userId = $user->getAuthIdentifier();
+    } else if (is_numeric($user)) {
+      $userId = $user;
+    } else {
+      $userId = null;
+    }
+    return $userId;
   }
 
 }
