@@ -8,7 +8,7 @@ use Illuminate\Database\Query\Builder;
 
 use Fynt\EloquentHistory\History;
 
-class EloquentHistoryTest extends PHPUnit_Framework_TestCase {
+class HistoryTest extends PHPUnit_Framework_TestCase {
 
   /**
    * @var Model
