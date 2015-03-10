@@ -1,5 +1,7 @@
 <?php namespace Fynt\EloquentHistory;
 
+use Carbon\Carbon;
+
 use Illuminate\Auth\UserInterface;
 use Illuminate\Config\Repository;
 use Illuminate\Database\DatabaseManager;
@@ -39,7 +41,8 @@ class History {
         'user_id' => $userId,
         'action' => $action,
         'object_id' => $model->$key,
-        'object_table' => get_class($model)
+        'object_table' => get_class($model),
+        'created_at' => new Carbon
       ]);
     }
 

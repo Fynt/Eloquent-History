@@ -1,8 +1,8 @@
 <?php namespace Fynt\EloquentHistory;
 
-use Illuminate\Support\ServiceProvider as BaseServiceProvider;
+use Illuminate\Support\ServiceProvider;
 
-class ServiceProvider extends BaseServiceProvider {
+class HistoryServiceProvider extends ServiceProvider {
 
   /**
    * Indicates if loading of the provider is deferred.
@@ -28,8 +28,8 @@ class ServiceProvider extends BaseServiceProvider {
    */
   public function register()
   {
-    $this->app->bind('history', function() {
-      return new EloquentHistory;
+    $this->app->bind('history', function($app) {
+      return new History($app['db'], $app['config']);
     });
   }
 
